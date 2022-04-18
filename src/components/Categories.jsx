@@ -35,11 +35,12 @@ import React from 'react';
 //   }
 // }
 
-const Categories = ({ items = [] }) => {
+const Categories = React.memo(({ items = [], onClickItem }) => {
   const [activeItem, setActiveItem] = React.useState(null);
 
   const onSelectItem = index => {
     setActiveItem(index);
+    onClickItem(index);
   };
 
   return (
@@ -59,6 +60,8 @@ const Categories = ({ items = [] }) => {
       </ul>
     </div>
   );
-};
+});
+
+Categories.displayName = 'Categories';
 
 export default Categories;

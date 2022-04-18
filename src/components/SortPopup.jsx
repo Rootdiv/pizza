@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 
 import arrowTopSvg from '../assets/img/arrow-top.svg';
 
-const SortPopup = ({ items = [] }) => {
+const SortPopup = React.memo(({ items = [] }) => {
   const [visiblePopup, setVisiblePopup] = useState(false);
   const [activeItem, setActiveItem] = useState(0);
   const sortRef = useRef();
@@ -51,6 +51,8 @@ const SortPopup = ({ items = [] }) => {
       )}
     </div>
   );
-};
+});
+
+SortPopup.displayName = 'SortPopup';
 
 export default SortPopup;
