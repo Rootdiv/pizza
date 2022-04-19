@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 const PizzaBlock = ({ name, imageUrl, price, types, sizes }) => {
+
   const availableTypes = ['тонкое', 'традиционное'];
   const availableSizes = [26, 30, 40];
 
@@ -13,8 +14,8 @@ const PizzaBlock = ({ name, imageUrl, price, types, sizes }) => {
     setActiveType(index);
   };
 
-  const onSelectSize = index => {
-    setActiveSize(index);
+  const onSelectSize = size => {
+    setActiveSize(size);
   };
 
   return (
@@ -34,11 +35,11 @@ const PizzaBlock = ({ name, imageUrl, price, types, sizes }) => {
           ))}
         </ul>
         <ul>
-          {availableSizes.map((size, index) => (
+          {availableSizes.map(size => (
             <li
               key={size}
-              onClick={() => onSelectSize(index)}
-              className={classNames({ active: activeSize === index, disabled: !sizes.includes(size) }) || null}>
+              onClick={() => onSelectSize(size)}
+              className={classNames({ active: activeSize === size, disabled: !sizes.includes(size) }) || null}>
               {size} см.
             </li>
           ))}
