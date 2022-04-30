@@ -11,7 +11,7 @@ const categoryNames = ['Мясные', 'Вегетарианская', 'Грил
 const sortItems = [
   { name: 'популярности', type: 'popular', order: 'desc' },
   { name: 'цене', type: 'price', order: 'desc' },
-  { name: 'алфавит', type: 'name', order: 'asc' },
+  { name: 'алфавиту', type: 'name', order: 'asc' },
 ];
 
 const Home = () => {
@@ -56,7 +56,7 @@ const Home = () => {
             <PizzaBlock
               onClickAddPizza={handleAddPizzaToCart}
               key={obj.id}
-              addedCount={cartItems[obj.id] && cartItems[obj.id].length}
+              addedCount={cartItems[obj.id] && cartItems[obj.id].items.length}
               {...obj}
             />
           ))
