@@ -6,6 +6,10 @@
   margin-bottom: 65px;
   transition: all 0.2s ease-in-out;
 
+  @media (max-width: 340px) {
+    width: 260px;
+  }
+
   @media (max-width: 1090px) {
     margin-bottom: 35px;
   }

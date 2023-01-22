@@ -23,6 +23,7 @@ export const Home = () => {
 
   useEffect(() => {
     dispatch(fetchPizzas(category, sortBy));
+    window.scrollTo(0, 0);
   }, [dispatch, category, sortBy]);
 
   const onSelectCategory = useCallback(

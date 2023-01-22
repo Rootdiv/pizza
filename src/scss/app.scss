@@ -89,9 +89,6 @@ body {
 
       .sort {
         padding-left: 20px;
-        b {
-          display: none;
-        }
       }
     }
 
@@ -141,6 +138,12 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+
+    @media (max-width: 450px) {
+      justify-content: center;
+    }
   }
 
   .content__title {
@@ -198,7 +201,7 @@ body {
 
   &__item {
     display: flex;
-    width: 100%;
+    gap: 12px;
     border-top: 1px solid $gray-line;
     padding-top: 30px;
     margin-top: 30px;
@@ -274,8 +277,7 @@ body {
     &-count {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      width: 13%;
+      gap: 12px;
 
       &-minus {
         svg {
@@ -338,8 +340,6 @@ body {
     &-remove {
       display: flex;
       align-items: center;
-      justify-content: flex-end;
-      width: 4%;
 
       @media (max-width: 768px) {
         position: absolute;
@@ -386,6 +386,12 @@ body {
     &-details {
       display: flex;
       justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 15px;
+
+      @media (max-width: 480px) {
+        justify-content: center;
+      }
 
       span {
         font-size: 22px;
