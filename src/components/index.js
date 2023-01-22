@@ -1,7 +1,8 @@
-export { default as Header } from './Header';
-export { default as Button } from './Button';
-export { default as Categories } from './Categories';
-export { default as SortPopup } from './SortPopup';
-export { default as PizzaBlock } from './PizzaBlock';
-export { default as PizzaLoadingBlock } from './PizzaBlock/LoadingBlock';
-export { default as CartItem } from './CartItem';
+export * from './Header';
+export * from './NotFoundBlock';
+export * from './Button';
+export * from './Categories';
+export * from './SortPopup';
+export * from './PizzaBlock';
+export * from './PizzaBlock/Skeleton';
+export * from './CartItem';

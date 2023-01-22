@@ -3,20 +3,13 @@ import PropTypes from 'prop-types';
 
 import arrowTopSvg from '../assets/img/arrow-top.svg';
 
-const SortPopup = React.memo(({ items, activeSortType, onClickSortType }) => {
+export const SortPopup = React.memo(({ items, activeSortType, onClickSortType }) => {
   const [visiblePopup, setVisiblePopup] = useState(false);
-  const activeLabel = items.find(obj => obj.type === activeSortType).name;
+  const activeLabel = items.find(obj => obj.type === activeSortType).title;
   const sortRef = useRef();
 
   const toggleVisiblePopup = () => {
     setVisiblePopup(!visiblePopup);
-  };
-
-  const handleOutsideClick = event => {
-    const path = event.path || (event.composedPath && event.composedPath());
-    if (!path.includes(sortRef.current)) {
-      setVisiblePopup(false);
-    }
   };
 
   const onSelectItem = obj => {
@@ -25,7 +18,16 @@ const SortPopup = React.memo(({ items, activeSortType, onClickSortType }) => {
   };
 
   useEffect(() => {
+    const handleOutsideClick = event => {
+      const path = event.path || (event.composedPath && event.composedPath());
+      if (!path.includes(sortRef.current)) {
+        setVisiblePopup(false);
+      }
+    };
+
     document.body.addEventListener('click', handleOutsideClick);
+
+    return () => document.body.removeEventListener('click', handleOutsideClick);
   }, []);
 
   return (
@@ -43,7 +45,7 @@ const SortPopup = React.memo(({ items, activeSortType, onClickSortType }) => {
                 onClick={() => onSelectItem(obj)}
                 className={activeSortType === obj.type ? 'active' : null}
                 key={`${obj.type}_${index}`}>
-                {obj.name}
+                {obj.title}
               </li>
             ))}
           </ul>
@@ -64,5 +66,3 @@ SortPopup.defaultProps = {
 };
 
 SortPopup.displayName = 'SortPopup';
-
-export default SortPopup;

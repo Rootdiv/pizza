@@ -4,8 +4,8 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { CartItem, Button } from '../components';
 import { clearCart, removeCartItem, plusCartItem, minusCartItem } from '../redux/actions/cart';
-import cartSvg from '../assets/img/cart.svg';
-import trashSvg from '../assets/img/trash.svg';
+import { ReactComponent as CartSvg } from '../assets/img/cart.svg';
+import { ReactComponent as TrashSvg } from '../assets/img/trash.svg';
 import cartEmptyImage from '../assets/img/empty-cart.png';
 
 const Cart = () => {
@@ -44,10 +44,10 @@ const Cart = () => {
         <div className="cart">
           <div className="cart__top">
             <h2 className="content__title">
-              <img src={cartSvg} alt="" /> Корзина
+              <CartSvg width={18} height={18} /> Корзина
             </h2>
             <div onClick={onClearCart} className="cart__clear">
-              <img src={trashSvg} alt="" />
+              <TrashSvg width={20} height={20} />
               <span>Очистить корзину</span>
             </div>
           </div>
@@ -56,7 +56,7 @@ const Cart = () => {
               <CartItem
                 id={obj.id}
                 key={obj.id}
-                name={obj.name}
+                title={obj.title}
                 type={obj.type}
                 size={obj.size}
                 totalPrice={items[obj.id].totalPrice}
@@ -77,7 +77,7 @@ const Cart = () => {
               </span>
             </div>
             <div className="cart__bottom-buttons">
-              <Link to='/' className="button button--outline button--add go-back-btn">
+              <Link to="/" className="button button--outline button--add go-back-btn">
                 <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
                     d="M7 13L1 6.93015L6.86175 1"
@@ -98,7 +98,7 @@ const Cart = () => {
       ) : (
         <div className="cart cart--empty">
           <h2>
-            Корзина пустая <i>😕</i>
+            Корзина пустая <span>&#128533;</span>
           </h2>
           <p>
             Вероятней всего, вы не заказывали ещё пиццу.

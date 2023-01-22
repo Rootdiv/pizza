@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Categories, SortPopup, PizzaBlock, PizzaLoadingBlock } from '../components';
+import { Categories, SortPopup, PizzaBlock, Skeleton } from '../components';
 
 import { setCategory, setSortBy } from '../redux/actions/filters';
 import { fetchPizzas } from '../redux/actions/pizzas';
@@ -9,12 +9,12 @@ import { addPizzaToCart } from '../redux/actions/cart';
 
 const categoryNames = ['Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
 const sortItems = [
-  { name: 'популярности', type: 'popular', order: 'desc' },
-  { name: 'цене', type: 'price', order: 'desc' },
-  { name: 'алфавиту', type: 'name', order: 'asc' },
+  { title: 'популярности', type: 'popular', order: 'desc' },
+  { title: 'цене', type: 'price', order: 'desc' },
+  { title: 'алфавиту', type: 'title', order: 'asc' },
 ];
 
-const Home = () => {
+export const Home = () => {
   const dispatch = useDispatch();
   const items = useSelector(({ pizzas }) => pizzas.items);
   const cartItems = useSelector(({ cart }) => cart.items);
@@ -43,6 +43,16 @@ const Home = () => {
     dispatch(addPizzaToCart(obj));
   };
 
+  const pizzas = items.map(obj => (
+    <PizzaBlock
+      onClickAddPizza={handleAddPizzaToCart}
+      key={obj.id}
+      addedCount={cartItems[obj.id] && cartItems[obj.id].items.length}
+      {...obj}
+    />
+  ));
+  const skeletons = [...new Array(12)].map((_, index) => <Skeleton key={index} />);
+
   return (
     <div className="container">
       <div className="content__top">
@@ -50,20 +60,7 @@ const Home = () => {
         <SortPopup activeSortType={sortBy.type} items={sortItems} onClickSortType={onSelectSortType} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
-      <div className="content__items">
-        {isLoaded
-          ? items.map(obj => (
-            <PizzaBlock
-              onClickAddPizza={handleAddPizzaToCart}
-              key={obj.id}
-              addedCount={cartItems[obj.id] && cartItems[obj.id].items.length}
-              {...obj}
-            />
-          ))
-          : Array(12)
-            .fill(0)
-            .map((_, index) => <PizzaLoadingBlock key={index} />)}
-      </div>
+      <div className="content__items">{isLoaded ? pizzas : skeletons}</div>
     </div>
   );
 };

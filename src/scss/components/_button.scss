@@ -17,7 +17,6 @@
     color: #fff;
   }
 
-  i,
   span,
   path,
   svg {
@@ -62,24 +61,12 @@
       color: $orange;
     }
 
-    svg {
-      path {
-        fill: $orange;
-      }
-    }
-
     &:hover {
       background-color: $orange;
 
       &,
       span {
         color: #fff;
-      }
-
-      svg {
-        path {
-          fill: #fff;
-        }
       }
     }
 
@@ -107,13 +94,13 @@
     }
 
     &:hover {
-      i {
+      .count {
         background-color: #fff;
         color: $orange;
       }
     }
 
-    i {
+    .count {
       display: inline-block;
       border-radius: 30px;
       background-color: $orange;

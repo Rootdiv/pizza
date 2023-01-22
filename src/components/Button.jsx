@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
+import clsx from 'clsx';
 
-const Button = ({ onClick, className, outline, children }) => (
+export const Button = ({ onClick, className, outline, children }) => (
   <button
     onClick={onClick}
-    className={classNames('button', className, {
+    className={clsx('button', className, {
       'button--outline': outline,
     })}>
     {children}
@@ -15,5 +15,3 @@ const Button = ({ onClick, className, outline, children }) => (
 Button.propTypes = {
   onClick: PropTypes.func,
 };
-
-export default Button;

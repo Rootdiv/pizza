@@ -1,9 +1,9 @@
 // импорт стандартных библиотек Node.js
-const { readFileSync  } = require('fs');
+const { readFileSync } = require('fs');
 const { createServer } = require('http');
 const path = require('path');
 // файл для базы данных
-const DB_FILE = process.env.DB_FILE || path.resolve(__dirname, 'public/db.json');
+const DB_FILE = process.env.DB_FILE || path.resolve(__dirname, 'db.json');
 // номер порта, на котором будет запущен сервер
 const PORT = process.env.PORT || 2010;
 // префикс URI для всех методов приложения
@@ -33,8 +33,8 @@ function getPizzas(params = {}) {
       if (params._sort === 'popular') {
         return a.popular > b.popular ? -1 : 1;
       }
-      if (params._sort === 'name') {
-        return a.name < b.name ? -1 : 1;
+      if (params._sort === 'title') {
+        return a.title < b.title ? -1 : 1;
       }
       return data;
     });
@@ -83,7 +83,6 @@ module.exports = createServer(async (req, res) => {
     for (const piece of query.split('&')) {
       const [key, value] = piece.split('=');
       queryParams[key] = value ? decodeURIComponent(value) : '';
-
     }
   }
 

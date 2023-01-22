@@ -1,9 +1,10 @@
 @import '../variables';
 
 .pizza-block {
-  width: 100%;
+  width: 280px;
   text-align: center;
   margin-bottom: 65px;
+  transition: all 0.2s ease-in-out;
 
   @media (max-width: 1090px) {
     margin-bottom: 35px;
@@ -15,6 +16,15 @@
       margin-bottom: 25px;
       padding-bottom: 45px;
     }
+  }
+
+  &:hover {
+    transform: scale(1.03);
+  }
+
+  &-wrapper {
+    display: flex;
+    justify-content: center;
   }
 
   &__image {
