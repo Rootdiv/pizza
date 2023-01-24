@@ -30,8 +30,8 @@ function getPizzas(params = {}) {
       if (params._sort === 'price') {
         return a.price > b.price ? -1 : 1;
       }
-      if (params._sort === 'popular') {
-        return a.popular > b.popular ? -1 : 1;
+      if (params._sort === 'rating') {
+        return a.rating > b.rating ? -1 : 1;
       }
       if (params._sort === 'title') {
         return a.title < b.title ? -1 : 1;

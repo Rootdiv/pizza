@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import arrowTopSvg from '../assets/img/arrow-top.svg';
 
-export const SortPopup = React.memo(({ items, activeSortType, onClickSortType }) => {
+export const SortPopup = React.memo(({ items, activeSortType, onChangeSort }) => {
   const [visiblePopup, setVisiblePopup] = useState(false);
   const activeLabel = items.find(obj => obj.type === activeSortType).title;
   const sortRef = useRef();
@@ -13,7 +13,7 @@ export const SortPopup = React.memo(({ items, activeSortType, onClickSortType })
   };
 
   const onSelectItem = obj => {
-    onClickSortType(obj);
+    onChangeSort(obj);
     setVisiblePopup(false);
   };
 
@@ -44,7 +44,7 @@ export const SortPopup = React.memo(({ items, activeSortType, onClickSortType })
               <li
                 onClick={() => onSelectItem(obj)}
                 className={activeSortType === obj.type ? 'active' : null}
-                key={`${obj.type}_${index}`}>
+                key={index}>
                 {obj.title}
               </li>
             ))}
@@ -58,7 +58,7 @@ export const SortPopup = React.memo(({ items, activeSortType, onClickSortType })
 SortPopup.propTypes = {
   activeSortType: PropTypes.string.isRequired,
   items: PropTypes.arrayOf(PropTypes.object).isRequired,
-  onClickSortType: PropTypes.func.isRequired,
+  onChangeSort: PropTypes.func.isRequired,
 };
 
 SortPopup.defaultProps = {

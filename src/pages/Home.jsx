@@ -7,11 +7,14 @@ import { setCategory, setSortBy } from '../redux/actions/filters';
 import { fetchPizzas } from '../redux/actions/pizzas';
 import { addPizzaToCart } from '../redux/actions/cart';
 
-const categoryNames = ['Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
+const categoryNames = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
 const sortItems = [
-  { title: 'популярности', type: 'popular', order: 'desc' },
-  { title: 'цене', type: 'price', order: 'desc' },
-  { title: 'алфавиту', type: 'title', order: 'asc' },
+  { title: 'популярности (DESC) ↓', type: 'rating', order: 'desc' },
+  { title: 'популярности (ASC) ↑', type: '-rating', order: 'asc' },
+  { title: 'цене (DESC) ↓', type: 'price', order: 'desc' },
+  { title: 'цене (ASC) ↑', type: '-price', order: 'asc' },
+  { title: 'алфавиту (DESC) ↓', type: 'title', order: 'desc' },
+  { title: 'алфавиту (ASC) ↑', type: '-title', order: 'asc' },
 ];
 
 export const Home = () => {
@@ -19,12 +22,12 @@ export const Home = () => {
   const items = useSelector(({ pizzas }) => pizzas.items);
   const cartItems = useSelector(({ cart }) => cart.items);
   const isLoaded = useSelector(({ pizzas }) => pizzas.isLoaded);
-  const { category, sortBy } = useSelector(({ filters }) => filters);
+  const { categoryId, sortBy } = useSelector(({ filters }) => filters);
 
   useEffect(() => {
-    dispatch(fetchPizzas(category, sortBy));
+    dispatch(fetchPizzas(categoryId, sortBy));
     window.scrollTo(0, 0);
-  }, [dispatch, category, sortBy]);
+  }, [dispatch, categoryId, sortBy]);
 
   const onSelectCategory = useCallback(
     index => {
@@ -57,8 +60,8 @@ export const Home = () => {
   return (
     <div className="container">
       <div className="content__top">
-        <Categories activeCategory={category} onClickCategory={onSelectCategory} items={categoryNames} />
-        <SortPopup activeSortType={sortBy.type} items={sortItems} onClickSortType={onSelectSortType} />
+        <Categories activeCategory={categoryId} onChangeCategory={onSelectCategory} items={categoryNames} />
+        <SortPopup activeSortType={sortBy.type} items={sortItems} onChangeSort={onSelectSortType} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">{isLoaded ? pizzas : skeletons}</div>
