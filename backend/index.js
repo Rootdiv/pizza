@@ -17,33 +17,76 @@ class ApiError extends Error {
   }
 }
 
-function getPizzas(params = {}) {
-  const pizzas = JSON.parse(readFileSync(DB_FILE) || '[]');
-  let data = pizzas.pizzas;
+const sortByAndSearch = (goods, params) => {
+  let data = goods;
+
+  if (params.search) {
+    const search = params.search.trim().toLowerCase();
+    data = goods.filter(item => item.title.toLowerCase().includes(search));
+  }
 
   if (params.category) {
     data = data.filter(item => item.category === +params.category);
   }
 
-  if (params._sort) {
+  if (params.sortby) {
     data = data.sort((a, b) => {
-      if (params._sort === 'price') {
-        return a.price > b.price ? -1 : 1;
+      if (params.order === 'desc') {
+        if (params.sortby === 'price') {
+          return a.price > b.price ? -1 : 1;
+        }
+        if (params.sortby === 'rating') {
+          return a.rating > b.rating ? -1 : 1;
+        }
+        if (params.sortby === 'title') {
+          return a.title > b.title ? -1 : 1;
+        }
       }
-      if (params._sort === 'rating') {
-        return a.rating > b.rating ? -1 : 1;
-      }
-      if (params._sort === 'title') {
-        return a.title < b.title ? -1 : 1;
+      if (params.order === 'asc') {
+        if (params.sortby === 'price') {
+          return a.price < b.price ? -1 : 1;
+        }
+        if (params.sortby === 'rating') {
+          return a.rating < b.rating ? -1 : 1;
+        }
+        if (params.sortby === 'title') {
+          return a.title < b.title ? -1 : 1;
+        }
       }
       return data;
     });
   }
   return data;
-}
+};
+
+const pagination = (goods, page = 1, count = 4) => {
+  const end = count * page;
+  const start = page === 1 ? 0 : end - count;
+
+  const pages = Math.ceil(goods.length / count);
+
+  return {
+    pizzas: goods.slice(start, end),
+    page,
+    pages,
+  };
+};
+
+const getPizzas = params => {
+  const data = JSON.parse(readFileSync(DB_FILE) || '[]');
+  const sortedData = sortByAndSearch(data.pizzas, params);
+  return pagination(sortedData, +params.page, params.limit);
+};
+
+const getItems = itemId => {
+  const data = JSON.parse(readFileSync(DB_FILE) || '[]');
+  const item = data.pizzas.find(({ id }) => id === Number(itemId));
+  if (!item) throw new ApiError(404, { message: 'Item Not Found' });
+  return item;
+};
 
 // создаём HTTP сервер, переданная функция будет реагировать на все запросы к нему
-module.exports = createServer(async (req, res) => {
+createServer(async (req, res) => {
   // req - объект с информацией о запросе, res - объект для управления отправляемым ответом
 
   // этот заголовок ответа указывает, что тело ответа будет в JSON формате
@@ -92,6 +135,9 @@ module.exports = createServer(async (req, res) => {
       if (uri === '' || uri === '/') {
         // /pizzas
         if (req.method === 'GET') return getPizzas(queryParams);
+      } else {
+        const itemId = uri.substring(1);
+        if (req.method === 'GET') return getItems(itemId);
       }
       return null;
     })();

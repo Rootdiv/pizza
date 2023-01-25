@@ -1,4 +1,6 @@
 const initialState = {
+  searchValue: '',
+  currentPage: 1,
   categoryId: 0,
   sortBy: {
     type: 'rating',
@@ -17,6 +19,18 @@ const filters = (state = initialState, action) => {
     return {
       ...state,
       categoryId: action.payload,
+    };
+  }
+  if (action.type === 'SET_SEARCH_VALUE') {
+    return {
+      ...state,
+      searchValue: action.payload,
+    };
+  }
+  if (action.type === 'SET_CURRENT_PAGE') {
+    return {
+      ...state,
+      currentPage: action.payload,
     };
   }
   return state;

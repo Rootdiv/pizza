@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
-import arrowTopSvg from '../assets/img/arrow-top.svg';
+import arrowTopSvg from 'assets/img/arrow-top.svg';
 
 export const SortPopup = React.memo(({ items, activeSortType, onChangeSort }) => {
   const [visiblePopup, setVisiblePopup] = useState(false);

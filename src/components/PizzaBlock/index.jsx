@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { Button } from '../Button';
+import { Button } from 'components/Button';
 
 export const PizzaBlock = ({ id, title, imageUrl, price, types, sizes, onClickAddPizza, addedCount }) => {
   const availableTypes = ['тонкое', 'традиционное'];
