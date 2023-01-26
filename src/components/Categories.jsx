@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export const Categories = React.memo(({ activeCategory, onChangeCategory }) => {
+export const Categories = ({ activeCategory, onChangeCategory }) => {
   const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
   return (
     <div className="categories">
@@ -17,7 +17,7 @@ export const Categories = React.memo(({ activeCategory, onChangeCategory }) => {
       </ul>
     </div>
   );
-});
+};
 
 Categories.propTypes = {
   items: PropTypes.arrayOf(PropTypes.string).isRequired,

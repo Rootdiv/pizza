@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { setSearchValue } from 'redux/actions/filters';
+import { setSearchValue } from 'redux/slices/filterSlice';
 import { fetchPizzas } from 'redux/actions/pizzas';
 
 import { ReactComponent as ClearIcon } from 'assets/img/clear-icon.svg';
@@ -14,12 +14,12 @@ export const Search = () => {
   const inputRef = useRef();
   const navigation = useNavigate();
 
-  const { currentPage, categoryId, sortBy } = useSelector(({ filters }) => filters);
+  const { categoryId, sorts: sortBy, currentPage, searchValue } = useSelector(state => state.filter);
 
   const handlerSubmit = event => {
     event.preventDefault();
     if (search.trim() !== '') {
-      dispatch(fetchPizzas(currentPage, categoryId, sortBy, search));
+      dispatch(fetchPizzas(currentPage, categoryId, sortBy, searchValue));
     }
     navigation('/search');
   };
@@ -32,6 +32,7 @@ export const Search = () => {
 
   const onChangeInput = event => {
     setSearch(event.target.value);
+    dispatch(setSearchValue(event.target.value));
   };
 
   return (

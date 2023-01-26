@@ -8,7 +8,7 @@ import logoSvg from 'assets/img/pizza-logo.svg';
 import cartSvg from 'assets/img/cart.svg';
 
 export const Header = () => {
-  const { totalPrice, totalCount } = useSelector(({ cart }) => cart);
+  const { totalPrice, totalCount } = useSelector(state => state.rootReducer.cart);
   const location = useLocation();
 
   return (

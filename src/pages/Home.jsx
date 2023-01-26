@@ -1,29 +1,20 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Categories, SortPopup, PizzaBlock, Skeleton } from 'components';
+import { Categories, Sort, PizzaBlock, Skeleton } from 'components';
 
-import { setCategory, setCurrentPage, setSortBy } from 'redux/actions/filters';
+import { setCategoryId, setCurrentPage } from 'redux/slices/filterSlice';
 import { fetchPizzas } from 'redux/actions/pizzas';
 import { addPizzaToCart } from 'redux/actions/cart';
 import { Pagination } from 'components/Pagination';
 
-const sortItems = [
-  { title: 'популярности (DESC) ↓', type: 'rating', order: 'desc' },
-  { title: 'популярности (ASC) ↑', type: '-rating', order: 'asc' },
-  { title: 'цене (DESC) ↓', type: 'price', order: 'desc' },
-  { title: 'цене (ASC) ↑', type: '-price', order: 'asc' },
-  { title: 'алфавиту (DESC) ↓', type: 'title', order: 'desc' },
-  { title: 'алфавиту (ASC) ↑', type: '-title', order: 'asc' },
-];
-
 export const Home = () => {
   const dispatch = useDispatch();
-  const items = useSelector(({ pizzas }) => pizzas.items);
-  const pages = useSelector(({ pizzas }) => pizzas.pages);
-  const cartItems = useSelector(({ cart }) => cart.items);
-  const isLoaded = useSelector(({ pizzas }) => pizzas.isLoaded);
-  const { categoryId, sortBy, currentPage } = useSelector(({ filters }) => filters);
+  const items = useSelector(state => state.rootReducer.pizzas.items);
+  const pages = useSelector(state => state.rootReducer.pizzas.pages);
+  const cartItems = useSelector(state => state.rootReducer.cart.items);
+  const isLoaded = useSelector(state => state.rootReducer.pizzas.isLoaded);
+  const { categoryId, sorts: sortBy, currentPage } = useSelector(state => state.filter);
 
   const onChangePage = number => {
     dispatch(setCurrentPage(number));
@@ -34,21 +25,11 @@ export const Home = () => {
       dispatch(fetchPizzas(currentPage, categoryId, sortBy));
       window.scrollTo(0, 0);
     }
-  }, [dispatch, currentPage, categoryId, sortBy]);
+  }, [dispatch, categoryId, sortBy, currentPage]);
 
-  const onSelectCategory = useCallback(
-    index => {
-      dispatch(setCategory(index));
-    },
-    [dispatch],
-  );
-
-  const onSelectSortType = useCallback(
-    type => {
-      dispatch(setSortBy(type));
-    },
-    [dispatch],
-  );
+  const onChangeCategory = id => {
+    dispatch(setCategoryId(id));
+  };
 
   const handleAddPizzaToCart = obj => {
     dispatch(addPizzaToCart(obj));
@@ -67,12 +48,12 @@ export const Home = () => {
   return (
     <div className="container">
       <div className="content__top">
-        <Categories activeCategory={categoryId} onChangeCategory={onSelectCategory} />
-        <SortPopup activeSortType={sortBy.type} items={sortItems} onChangeSort={onSelectSortType} />
+        <Categories activeCategory={categoryId} onChangeCategory={onChangeCategory} />
+        <Sort />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">{isLoaded ? pizzas : skeletons}</div>
-      <Pagination currentPage={currentPage} pageCount={pages} onChangePage={onChangePage} />
+      <Pagination pageCount={pages} onChangePage={onChangePage} />
     </div>
   );
 };
