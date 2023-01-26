@@ -12,6 +12,5 @@ export const Pagination = ({ pageCount, onChangePage }) => (
     onPageChange={event => onChangePage(event.selected + 1)}
     pageRangeDisplayed={4}
     pageCount={pageCount}
-    renderOnZeroPageCount={null}
   />
 );

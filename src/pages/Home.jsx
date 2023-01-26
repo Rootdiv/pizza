@@ -21,11 +21,8 @@ export const Home = () => {
   };
 
   useEffect(() => {
-    if (!window.location.search) {
-      dispatch(fetchPizzas(currentPage, categoryId, sortBy));
-      window.scrollTo(0, 0);
-    }
-  }, [dispatch, categoryId, sortBy, currentPage]);
+    dispatch(fetchPizzas(currentPage, categoryId, sortBy));
+  }, [categoryId, currentPage, dispatch, sortBy]);
 
   const onChangeCategory = id => {
     dispatch(setCategoryId(id));

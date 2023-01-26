@@ -27,27 +27,27 @@ const filterSlice = createSlice({
     setCurrentPage(state, action) {
       state.currentPage = action.payload;
     },
-    setFilters(state, action) {
-      if (Object.keys(action.payload).length) {
-        state.currentPage = Number(action.payload.currentPage);
-        state.categoryId = Number(action.payload.categoryId);
-        state.sorts = action.payload.sorts;
-      } else {
-        state.currentPage = 1;
-        state.categoryId = 0;
-        state.sorts = {
-          name: 'популярности',
-          type: 'rating',
-          order: 'desc',
-        };
-      }
-    },
+    // setFilters(state, action) {
+    //   if (Object.keys(action.payload).length) {
+    //     state.currentPage = Number(action.payload.currentPage);
+    //     state.categoryId = Number(action.payload.categoryId);
+    //     state.sorts = action.payload.sorts;
+    //   } else {
+    //     state.currentPage = 1;
+    //     state.categoryId = 0;
+    //     state.sorts = {
+    //       name: 'популярности',
+    //       type: 'rating',
+    //       order: 'desc',
+    //     };
+    //   }
+    // },
   },
 });
 
 export const selectFilter = state => state.filter;
 export const selectSorts = state => state.filter.sorts;
 
-export const { setCategoryId, setSorts, setCurrentPage, setFilters, setSearchValue } = filterSlice.actions;
+export const { setCategoryId, setSorts, setCurrentPage, setSearchValue } = filterSlice.actions;
 
 export default filterSlice.reducer;
