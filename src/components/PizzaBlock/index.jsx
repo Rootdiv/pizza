@@ -2,13 +2,19 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { Button } from 'components/Button';
+import { addItem, selectCartItemById } from 'redux/slices/cartSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
-export const PizzaBlock = ({ id, title, imageUrl, price, types, sizes, onClickAddPizza, addedCount }) => {
-  const availableTypes = ['тонкое', 'традиционное'];
-  const availableSizes = [26, 30, 40];
+const typeNames = ['тонкое', 'традиционное'];
+const availableSizes = [26, 30, 40];
 
-  const [activeType, setActiveType] = useState(types[0]);
-  const [activeSize, setActiveSize] = useState(sizes[0]);
+export const PizzaBlock = ({ id, title, imageUrl, price, types, sizes }) => {
+  const dispatch = useDispatch();
+  const cartItem = useSelector(selectCartItemById(id));
+  const [activeType, setActiveType] = useState(0);
+  const [activeSize, setActiveSize] = useState(0);
+
+  const addedCount = cartItem ? cartItem.count : 0;
 
   const onSelectType = index => {
     setActiveType(index);
@@ -24,10 +30,10 @@ export const PizzaBlock = ({ id, title, imageUrl, price, types, sizes, onClickAd
       title,
       imageUrl,
       price,
-      size: activeSize,
-      type: availableTypes[activeType],
+      size: sizes[activeSize],
+      type: typeNames[activeType],
     };
-    onClickAddPizza(obj);
+    dispatch(addItem(obj));
   };
 
   return (
@@ -37,7 +43,7 @@ export const PizzaBlock = ({ id, title, imageUrl, price, types, sizes, onClickAd
         <h4 className="pizza-block__title">{title}</h4>
         <div className="pizza-block__selector">
           <ul>
-            {availableTypes.map((type, index) => (
+            {typeNames.map((type, index) => (
               <li
                 key={type}
                 onClick={() => onSelectType(index)}
@@ -47,25 +53,25 @@ export const PizzaBlock = ({ id, title, imageUrl, price, types, sizes, onClickAd
             ))}
           </ul>
           <ul>
-            {availableSizes.map(size => (
+            {availableSizes.map((size, index) => (
               <li
                 key={size}
-                onClick={() => onSelectSize(size)}
-                className={clsx({ active: activeSize === size, disabled: !sizes.includes(size) })}>
+                onClick={() => onSelectSize(index)}
+                className={clsx({ active: activeSize === index, disabled: !sizes.includes(size) })}>
                 {size} см.
               </li>
             ))}
           </ul>
         </div>
         <div className="pizza-block__bottom">
-          <div className="pizza-block__price">от {price} ₽</div>
+          <div className="pizza-block__price">от {price} &#8381;</div>
           <Button onClick={onAddPizza} className="button--add" outline>
             <svg width="10" height="10" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
               <path d="M5.92 3.84v4.8a.96.96 0 0 1-1.92 0V.96a.96.96 0 0 1 1.92 0v2.88Z" />
               <path d="M5.76 5.92H.96A.96.96 0 0 1 .96 4h7.68a.96.96 0 0 1 0 1.92H5.76Z" />
             </svg>
             <span>Добавить</span>
-            {addedCount && <span className="count">{addedCount}</span>}
+            {addedCount > 0 && <span className="count">{addedCount}</span>}
           </Button>
         </div>
       </div>
@@ -79,8 +85,6 @@ PizzaBlock.propTypes = {
   price: PropTypes.number,
   types: PropTypes.arrayOf(PropTypes.number),
   sizes: PropTypes.arrayOf(PropTypes.number),
-  onClickAddPizza: PropTypes.func,
-  addedCount: PropTypes.number,
 };
 
 PizzaBlock.defaultProps = {

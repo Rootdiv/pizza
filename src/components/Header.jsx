@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { selectCart } from 'redux/slices/cartSlice';
 
 import { Button } from './Button';
 import { Search } from './Search';
@@ -8,7 +9,7 @@ import logoSvg from 'assets/img/pizza-logo.svg';
 import cartSvg from 'assets/img/cart.svg';
 
 export const Header = () => {
-  const { totalPrice, totalCount } = useSelector(state => state.rootReducer.cart);
+  const { totalCount, totalPrice } = useSelector(selectCart);
   const location = useLocation();
 
   return (

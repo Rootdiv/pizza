@@ -1,13 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
-import thunk from 'redux-thunk';
 
-import rootReducer from './reducers';
+import pizzas from './reducers/pizzas';
 import filter from './slices/filterSlice';
+import cart from './slices/cartSlice';
 
 export const store = configureStore({
   reducer: {
     filter,
-    rootReducer,
+    cart,
+    pizzas,
   },
-  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(thunk),
 });

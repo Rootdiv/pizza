@@ -5,15 +5,13 @@ import { Categories, Sort, PizzaBlock, Skeleton } from 'components';
 
 import { setCategoryId, setCurrentPage } from 'redux/slices/filterSlice';
 import { fetchPizzas } from 'redux/actions/pizzas';
-import { addPizzaToCart } from 'redux/actions/cart';
 import { Pagination } from 'components/Pagination';
 
 export const Home = () => {
   const dispatch = useDispatch();
-  const items = useSelector(state => state.rootReducer.pizzas.items);
-  const pages = useSelector(state => state.rootReducer.pizzas.pages);
-  const cartItems = useSelector(state => state.rootReducer.cart.items);
-  const isLoaded = useSelector(state => state.rootReducer.pizzas.isLoaded);
+  const items = useSelector(state => state.pizzas.items);
+  const pages = useSelector(state => state.pizzas.pages);
+  const isLoaded = useSelector(state => state.pizzas.isLoaded);
   const { categoryId, sorts: sortBy, currentPage } = useSelector(state => state.filter);
 
   const onChangePage = number => {
@@ -28,18 +26,7 @@ export const Home = () => {
     dispatch(setCategoryId(id));
   };
 
-  const handleAddPizzaToCart = obj => {
-    dispatch(addPizzaToCart(obj));
-  };
-
-  const pizzas = items.map(obj => (
-    <PizzaBlock
-      onClickAddPizza={handleAddPizzaToCart}
-      key={obj.id}
-      addedCount={cartItems[obj.id] && cartItems[obj.id].items.length}
-      {...obj}
-    />
-  ));
+  const pizzas = items.map(obj => <PizzaBlock key={obj.id} {...obj} />);
   const skeletons = [...new Array(8)].map((_, index) => <Skeleton key={index} />);
 
   return (
