@@ -18,20 +18,13 @@
   }
 }
 
-.button {
-  position: absolute;
-  left: 14px;
-  top: 12px;
-  background-color: transparent;
-  border: none;
+.icon {
   width: 22px;
   height: 22px;
   opacity: 0.3;
-  cursor: pointer;
-
-  &:hover {
-    opacity: 0.8;
-  }
+  position: absolute;
+  left: 14px;
+  top: 13px;
 }
 
 .clearIcon {

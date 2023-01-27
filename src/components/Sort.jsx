@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 
 import arrowTopSvg from 'assets/img/arrow-top.svg';
 import { useDispatch, useSelector } from 'react-redux';
-import { setSorts } from 'redux/slices/filterSlice';
+import { selectSorts, setSorts } from 'redux/slices/filterSlice';
 
 const sortItems = [
   { title: 'популярности (DESC) ↓', type: 'rating', order: 'desc' },
@@ -16,7 +16,7 @@ const sortItems = [
 export const Sort = () => {
   const dispatch = useDispatch();
 
-  const sort = useSelector(state => state.filter.sorts);
+  const sort = useSelector(selectSorts);
 
   const [open, setOpen] = useState(false);
   const sortRef = useRef();

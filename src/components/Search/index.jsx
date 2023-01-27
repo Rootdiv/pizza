@@ -1,8 +1,7 @@
-import React, { useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState, useRef, useMemo } from 'react';
+import { useDispatch } from 'react-redux';
 import { setSearchValue } from 'redux/slices/filterSlice';
-import { fetchPizzas } from 'redux/actions/pizzas';
+import debounce from 'lodash.debounce';
 
 import { ReactComponent as ClearIcon } from 'assets/img/clear-icon.svg';
 
@@ -10,47 +9,42 @@ import styles from './Search.module.scss';
 
 export const Search = () => {
   const dispatch = useDispatch();
-  const [search, setSearch] = useState('');
+  const [value, setValue] = useState('');
   const inputRef = useRef();
-  const navigation = useNavigate();
-
-  const { categoryId, sorts: sortBy, currentPage, searchValue } = useSelector(state => state.filter);
-
-  const handlerSubmit = event => {
-    event.preventDefault();
-    if (search.trim() !== '') {
-      dispatch(fetchPizzas(currentPage, categoryId, sortBy, searchValue));
-    }
-    navigation('/search');
-  };
 
   const onClickClear = () => {
-    setSearch('');
+    setValue('');
     dispatch(setSearchValue(''));
     inputRef.current.focus();
   };
 
+  const updateSearchValue = useMemo(
+    () =>
+      debounce(str => {
+        dispatch(setSearchValue(str));
+      }, 500),
+    [dispatch],
+  );
+
   const onChangeInput = event => {
-    setSearch(event.target.value);
-    dispatch(setSearchValue(event.target.value));
+    setValue(event.target.value);
+    updateSearchValue(event.target.value);
   };
 
   return (
-    <form className={styles.root} onSubmit={handlerSubmit}>
-      <button className={styles.button}>
-        <svg className={styles.icon} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-          <circle cx="14" cy="14" r="9" fill="none" stroke="#000" />
-          <path fill="none" stroke="#000" d="m27 27-6.634-6.634" />
-        </svg>
-      </button>
+    <div className={styles.root}>
+      <svg className={styles.icon} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+        <circle cx="14" cy="14" r="9" fill="none" stroke="#000" />
+        <path fill="none" stroke="#000" d="m27 27-6.634-6.634" />
+      </svg>
       <input
         ref={inputRef}
-        value={search}
+        value={value}
         onChange={onChangeInput}
         className={styles.input}
         placeholder="Поиск пиццы..."
       />
-      {search && <ClearIcon width={20} height={20} className={styles.clearIcon} onClick={onClickClear} />}
-    </form>
+      {value && <ClearIcon width={20} height={20} className={styles.clearIcon} onClick={onClickClear} />}
+    </div>
   );
 };

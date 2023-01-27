@@ -2,25 +2,24 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Categories, Sort, PizzaBlock, Skeleton } from 'components';
-
-import { setCategoryId, setCurrentPage } from 'redux/slices/filterSlice';
-import { fetchPizzas } from 'redux/actions/pizzas';
 import { Pagination } from 'components/Pagination';
+
+import { selectFilter, setCategoryId, setCurrentPage } from 'redux/slices/filterSlice';
+import { selectPizzaData, fetchPizzas } from 'redux/slices/pizzaSlice';
 
 export const Home = () => {
   const dispatch = useDispatch();
-  const items = useSelector(state => state.pizzas.items);
-  const pages = useSelector(state => state.pizzas.pages);
-  const isLoaded = useSelector(state => state.pizzas.isLoaded);
-  const { categoryId, sorts: sortBy, currentPage } = useSelector(state => state.filter);
+  const { items, pages, status } = useSelector(selectPizzaData);
+  const { categoryId, sorts: sortBy, currentPage, searchValue } = useSelector(selectFilter);
 
   const onChangePage = number => {
     dispatch(setCurrentPage(number));
   };
 
   useEffect(() => {
-    dispatch(fetchPizzas(currentPage, categoryId, sortBy));
-  }, [categoryId, currentPage, dispatch, sortBy]);
+    const search = searchValue ? `&search=${searchValue}` : '';
+    dispatch(fetchPizzas({ categoryId, sortBy, currentPage, search }));
+  }, [dispatch, categoryId, sortBy, currentPage, searchValue]);
 
   const onChangeCategory = id => {
     dispatch(setCategoryId(id));
@@ -36,7 +35,16 @@ export const Home = () => {
         <Sort />
       </div>
       <h2 className="content__title">Все пиццы</h2>
-      <div className="content__items">{isLoaded ? pizzas : skeletons}</div>
+      {status === 'error' ? (
+        <div className="content__error-info">
+          <h2>
+            Произошла ошибка <span>&#128533;</span>
+          </h2>
+          <p>К сожалению, не удалось получить пиццы. Попробуйте повторить попытку позже.</p>
+        </div>
+      ) : (
+        <div className="content__items">{status === 'loading' ? skeletons : pizzas}</div>
+      )}
       <Pagination pageCount={pages} onChangePage={onChangePage} />
     </div>
   );
