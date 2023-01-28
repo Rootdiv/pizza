@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-//const URL = 'https://63cecf0ad2e8c29a9bdf490d.mockapi.io';
 const URL = `${window.location.protocol}//${window.location.hostname}:2010`;
 
 export const fetchPizzas = createAsyncThunk('pizza/fetchPizzasStatus', async params => {

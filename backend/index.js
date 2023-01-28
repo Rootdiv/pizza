@@ -1,7 +1,16 @@
 // импорт стандартных библиотек Node.js
 const { readFileSync } = require('fs');
-const { createServer } = require('http');
+const protocol = process.env.HTTP || 'http';
+const { createServer } = require(protocol);
 const path = require('path');
+
+const options = {};
+if (protocol === 'https') {
+  const certDir = '/etc/nginx/acme.sh';
+  options['key'] = readFileSync(`${certDir}/rootdiv.ru/privkey.pem`);
+  options['cert'] = readFileSync(`${certDir}/rootdiv.ru/fullchain.pem`);
+}
+
 // файл для базы данных
 const DB_FILE = process.env.DB_FILE || path.resolve(__dirname, 'db.json');
 // номер порта, на котором будет запущен сервер
@@ -78,15 +87,8 @@ const getPizzas = params => {
   return pagination(sortedData, +params.page, params.limit);
 };
 
-const getItems = itemId => {
-  const data = JSON.parse(readFileSync(DB_FILE) || '[]');
-  const item = data.pizzas.find(({ id }) => id === Number(itemId));
-  if (!item) throw new ApiError(404, { message: 'Item Not Found' });
-  return item;
-};
-
 // создаём HTTP сервер, переданная функция будет реагировать на все запросы к нему
-createServer(async (req, res) => {
+createServer(options, async (req, res) => {
   // req - объект с информацией о запросе, res - объект для управления отправляемым ответом
 
   // этот заголовок ответа указывает, что тело ответа будет в JSON формате
@@ -135,9 +137,6 @@ createServer(async (req, res) => {
       if (uri === '' || uri === '/') {
         // /pizzas
         if (req.method === 'GET') return getPizzas(queryParams);
-      } else {
-        const itemId = uri.substring(1);
-        if (req.method === 'GET') return getItems(itemId);
       }
       return null;
     })();
@@ -157,7 +156,7 @@ createServer(async (req, res) => {
 })
   // выводим инструкцию, как только сервер запустился...
   .on('listening', () => {
-    if (process.env.NODE_ENV !== 'test') {
+    if (process.env.NODE_ENV !== 'https') {
       console.log(`Сервер запущен. Вы можете использовать его по адресу http://localhost:${PORT}`);
       console.log('Нажмите CTRL+C, чтобы остановить сервер');
     }
