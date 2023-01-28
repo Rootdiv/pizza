@@ -11,8 +11,8 @@ const availableSizes = [26, 30, 40];
 export const PizzaBlock = ({ id, title, imageUrl, price, types, sizes }) => {
   const dispatch = useDispatch();
   const cartItem = useSelector(selectCartItemById(id));
-  const [activeType, setActiveType] = useState(0);
-  const [activeSize, setActiveSize] = useState(0);
+  const [activeType, setActiveType] = useState(types[0]);
+  const [activeSize, setActiveSize] = useState(sizes[0]);
 
   const addedCount = cartItem ? cartItem.count : 0;
 
@@ -30,7 +30,7 @@ export const PizzaBlock = ({ id, title, imageUrl, price, types, sizes }) => {
       title,
       imageUrl,
       price,
-      size: sizes[activeSize],
+      size: activeSize,
       type: typeNames[activeType],
     };
     dispatch(addItem(obj));
@@ -53,11 +53,11 @@ export const PizzaBlock = ({ id, title, imageUrl, price, types, sizes }) => {
             ))}
           </ul>
           <ul>
-            {availableSizes.map((size, index) => (
+            {availableSizes.map(size => (
               <li
                 key={size}
-                onClick={() => onSelectSize(index)}
-                className={clsx({ active: activeSize === index, disabled: !sizes.includes(size) })}>
+                onClick={() => onSelectSize(size)}
+                className={clsx({ active: activeSize === size, disabled: !sizes.includes(size) })}>
                 {size} см.
               </li>
             ))}
