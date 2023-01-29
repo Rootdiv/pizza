@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
+
 import { Button } from 'components/Button';
 import { addItem, selectCartItemById } from 'redux/slices/cartSlice';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,7 +8,17 @@ import { useDispatch, useSelector } from 'react-redux';
 const typeNames = ['тонкое', 'традиционное'];
 const availableSizes = [26, 30, 40];
 
-export const PizzaBlock = ({ id, title, imageUrl, price, types, sizes }) => {
+type PizzaBlockProps = {
+  id: string;
+  title: string;
+  price: number;
+  imageUrl: string;
+  sizes: number[];
+  types: number[];
+  rating: number;
+};
+
+export const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, imageUrl, price, types, sizes }) => {
   const dispatch = useDispatch();
   const cartItem = useSelector(selectCartItemById(id));
   const [activeType, setActiveType] = useState(types[0]);
@@ -16,11 +26,11 @@ export const PizzaBlock = ({ id, title, imageUrl, price, types, sizes }) => {
 
   const addedCount = cartItem ? cartItem.count : 0;
 
-  const onSelectType = index => {
+  const onSelectType = (index: number) => {
     setActiveType(index);
   };
 
-  const onSelectSize = size => {
+  const onSelectSize = (size: number) => {
     setActiveSize(size);
   };
 
@@ -77,19 +87,4 @@ export const PizzaBlock = ({ id, title, imageUrl, price, types, sizes }) => {
       </div>
     </div>
   );
-};
-
-PizzaBlock.propTypes = {
-  title: PropTypes.string,
-  imageUrl: PropTypes.string,
-  price: PropTypes.number,
-  types: PropTypes.arrayOf(PropTypes.number),
-  sizes: PropTypes.arrayOf(PropTypes.number),
-};
-
-PizzaBlock.defaultProps = {
-  title: '---',
-  price: 0,
-  types: [],
-  sizes: [],
 };

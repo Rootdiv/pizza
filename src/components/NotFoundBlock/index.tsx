@@ -2,7 +2,7 @@ import React from 'react';
 
 import styles from './NotFoundBlock.module.scss';
 
-export const NotFoundBlock = () => (
+export const NotFoundBlock: React.FC = () => (
   <div className={styles.root}>
     <h1>
       <span>&#128533;</span>

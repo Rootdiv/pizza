@@ -7,25 +7,26 @@ import { Pagination } from 'components/Pagination';
 import { selectFilter, setCategoryId, setCurrentPage } from 'redux/slices/filterSlice';
 import { selectPizzaData, fetchPizzas } from 'redux/slices/pizzaSlice';
 
-export const Home = () => {
+const Home: React.FC = () => {
   const dispatch = useDispatch();
   const { items, pages, status } = useSelector(selectPizzaData);
   const { categoryId, sorts: sortBy, currentPage, searchValue } = useSelector(selectFilter);
 
-  const onChangePage = number => {
-    dispatch(setCurrentPage(number));
+  const onChangePage = (page: number): void => {
+    dispatch(setCurrentPage(page));
   };
 
   useEffect(() => {
     const search = searchValue ? `&search=${searchValue}` : '';
+    //@ts-ignore
     dispatch(fetchPizzas({ categoryId, sortBy, currentPage, search }));
   }, [dispatch, categoryId, sortBy, currentPage, searchValue]);
 
-  const onChangeCategory = id => {
+  const onChangeCategory = (id: number): void => {
     dispatch(setCategoryId(id));
   };
 
-  const pizzas = items.map(obj => <PizzaBlock key={obj.id} {...obj} />);
+  const pizzas = items.map((obj: any) => <PizzaBlock key={obj.id} {...obj} />);
   const skeletons = [...new Array(8)].map((_, index) => <Skeleton key={index} />);
 
   return (
@@ -45,7 +46,7 @@ export const Home = () => {
       ) : (
         <div className="content__items">{status === 'loading' ? skeletons : pizzas}</div>
       )}
-      <Pagination pageCount={pages} onChangePage={onChangePage} />
+      {pages > 0 && <Pagination pageCount={pages} onChangePage={onChangePage} />}
     </div>
   );
 };

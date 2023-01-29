@@ -8,7 +8,7 @@ import { ReactComponent as TrashSvg } from 'assets/img/trash.svg';
 
 import { selectCart, clearItems } from 'redux/slices/cartSlice';
 
-const Cart = () => {
+const Cart: React.FC = () => {
   const dispatch = useDispatch();
   const { items, totalCount, totalPrice } = useSelector(selectCart);
 
@@ -35,7 +35,7 @@ const Cart = () => {
           </div>
         </div>
         <div className="content__items">
-          {items.map(item => (
+          {items.map((item: any) => (
             <CartItem key={item.id} {...item} />
           ))}
         </div>

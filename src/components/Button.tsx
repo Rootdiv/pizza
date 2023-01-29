@@ -1,8 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
-export const Button = ({ onClick, className, outline, children }) => (
+type Props = {
+  onClick: () => void;
+  className: string;
+  outline: boolean;
+  children: React.ReactNode;
+};
+
+export const Button = ({ onClick, className, outline, children }: Partial<Props>) => (
   <button
     onClick={onClick}
     className={clsx('button', className, {
@@ -11,7 +17,3 @@ export const Button = ({ onClick, className, outline, children }) => (
     {children}
   </button>
 );
-
-Button.propTypes = {
-  onClick: PropTypes.func,
-};

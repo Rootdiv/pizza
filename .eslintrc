@@ -5,7 +5,8 @@
     "es6": true,
     "node": true
   },
-  "extends": ["eslint:recommended",
+  "extends": [
+    "eslint:recommended",
     "plugin:react/recommended",
     "react-app"
   ],
@@ -22,11 +23,16 @@
     "babel"
   ],
   "rules": {
+    "@typescript-eslint/no-unused-vars": [
+      "error"
+    ],
     "react/prop-types": 0,
     "indent": [
       "error",
       2,
-      { "SwitchCase": 1 }
+      {
+        "SwitchCase": 1
+      }
     ],
     "linebreak-style": [
       "error",
@@ -43,9 +49,12 @@
     "babel/semi": 1,
     "babel/no-unused-expressions": 1,
     "babel/valid-typeof": 1,
-    "no-unused-vars": ["error", {
-      "caughtErrorsIgnorePattern": "^ignore"
-    }],
+    "no-unused-vars": [
+      "error",
+      {
+        "caughtErrorsIgnorePattern": "^ignore"
+      }
+    ],
     "semi": [
       "error",
       "always"
@@ -152,12 +161,16 @@
       "error",
       "always"
     ],
-    "operator-linebreak": [2, "after", {
-      "overrides": {
-        ":": "before",
-        "?": "before"
+    "operator-linebreak": [
+      2,
+      "after",
+      {
+        "overrides": {
+          ":": "before",
+          "?": "before"
+        }
       }
-    }],
+    ],
     "semi-spacing": [
       "error",
       {
