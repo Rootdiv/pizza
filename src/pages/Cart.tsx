@@ -6,7 +6,8 @@ import { CartEmpty, CartItem, Button } from 'components';
 import { ReactComponent as CartSvg } from 'assets/img/cart.svg';
 import { ReactComponent as TrashSvg } from 'assets/img/trash.svg';
 
-import { selectCart, clearItems } from 'redux/slices/cartSlice';
+import { selectCart } from 'redux/cart/selectors';
+import { clearItems } from 'redux/cart/slice';
 
 const Cart: React.FC = () => {
   const dispatch = useDispatch();

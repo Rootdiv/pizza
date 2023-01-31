@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import clsx from 'clsx';
 
 import { Button } from 'components/Button';
-import { addItem, CartItemType, selectCartItemById } from 'redux/slices/cartSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { selectCartItemById } from 'redux/cart/selectors';
+import { CartItemType } from 'redux/cart/types';
+import { addItem } from 'redux/cart/slice';
 
 const typeNames = ['тонкое', 'традиционное'];
 const availableSizes = [26, 30, 40];

@@ -5,8 +5,10 @@ import { Categories, Sort, PizzaBlock, Skeleton } from 'components';
 import { Pagination } from 'components/Pagination';
 
 import { useAppDispatch } from 'redux/store';
-import { selectFilter, setCategoryId, setCurrentPage } from 'redux/slices/filterSlice';
-import { selectPizzaData, fetchPizzas } from 'redux/slices/pizzaSlice';
+import { selectPizzaData } from 'redux/pizza/selectors';
+import { selectFilter } from 'redux/filter/selectors';
+import { setCategoryId, setCurrentPage } from 'redux/filter/slice';
+import { fetchPizzas } from 'redux/pizza/asyncActions';
 
 const Home: React.FC = () => {
   const dispatch = useAppDispatch();

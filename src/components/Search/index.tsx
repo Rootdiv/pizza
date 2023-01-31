@@ -1,6 +1,6 @@
 import React, { useState, useRef, useMemo, ChangeEvent } from 'react';
 import { useDispatch } from 'react-redux';
-import { setSearchValue } from 'redux/slices/filterSlice';
+import { setSearchValue } from 'redux/filter/slice';
 import debounce from 'lodash.debounce';
 
 import { ReactComponent as ClearIcon } from 'assets/img/clear-icon.svg';
