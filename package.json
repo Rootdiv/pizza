@@ -54,6 +54,7 @@
     ]
   },
   "devDependencies": {
+    "ahooks": "^3.7.4",
     "sass": "^1.57.1"
   }
 }

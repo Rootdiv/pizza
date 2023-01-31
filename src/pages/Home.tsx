@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 
 import { Categories, Sort, PizzaBlock, Skeleton } from 'components';
@@ -13,11 +13,14 @@ const Home: React.FC = () => {
   const { items, pages, status } = useSelector(selectPizzaData);
   const { categoryId, sorts: sortBy, currentPage, searchValue } = useSelector(selectFilter);
 
-  const onChangeCategory = (id: number): void => {
-    dispatch(setCategoryId(id));
-    //При изменении категории принудительно меняем номер страницы в стейте
-    dispatch(setCurrentPage(1));
-  };
+  const onChangeCategory = useCallback(
+    (id: number): void => {
+      dispatch(setCategoryId(id));
+      //При изменении категории принудительно меняем номер страницы в стейте
+      dispatch(setCurrentPage(1));
+    },
+    [dispatch],
+  );
 
   const onChangePage = (page: number): void => {
     dispatch(setCurrentPage(page));
@@ -35,7 +38,7 @@ const Home: React.FC = () => {
     <div className="container">
       <div className="content__top">
         <Categories activeCategory={categoryId} onChangeCategory={onChangeCategory} />
-        <Sort />
+        <Sort sort={sortBy} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       {status === 'error' ? (

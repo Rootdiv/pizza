@@ -52,10 +52,6 @@ const cartSlice = createSlice({
         findItem.count--;
       }
 
-      if (findItem?.count === 0) {
-        state.items = state.items.filter(obj => obj.id !== action.payload);
-      }
-
       state.totalPrice = calcTotalPrice(state.items);
       state.totalCount = calcTotalCount(state.items);
     },

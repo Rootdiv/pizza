@@ -10,7 +10,7 @@ export enum SortTypeEnum {
   PRICE_ASC = '-price',
 }
 
-type Sort = {
+export type SortItem = {
   title: string;
   type: SortTypeEnum;
   order: string;
@@ -20,7 +20,7 @@ interface IFilterSliceState {
   categoryId: number;
   searchValue: string;
   currentPage: number;
-  sorts: Sort;
+  sorts: SortItem;
 }
 
 const initialState: IFilterSliceState = {
@@ -44,7 +44,7 @@ const filterSlice = createSlice({
     setSearchValue(state, action: PayloadAction<string>) {
       state.searchValue = action.payload;
     },
-    setSorts(state, action: PayloadAction<Sort>) {
+    setSorts(state, action: PayloadAction<SortItem>) {
       state.sorts = action.payload;
     },
     setCurrentPage(state, action: PayloadAction<number>) {
