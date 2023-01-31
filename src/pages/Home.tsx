@@ -13,6 +13,12 @@ const Home: React.FC = () => {
   const { items, pages, status } = useSelector(selectPizzaData);
   const { categoryId, sorts: sortBy, currentPage, searchValue } = useSelector(selectFilter);
 
+  const onChangeCategory = (id: number): void => {
+    dispatch(setCategoryId(id));
+    //При изменении категории принудительно меняем номер страницы в стейте
+    dispatch(setCurrentPage(1));
+  };
+
   const onChangePage = (page: number): void => {
     dispatch(setCurrentPage(page));
   };
@@ -21,10 +27,6 @@ const Home: React.FC = () => {
     const search = searchValue ? `&search=${searchValue}` : '';
     dispatch(fetchPizzas({ categoryId, sortBy, currentPage, search }));
   }, [dispatch, categoryId, sortBy, currentPage, searchValue]);
-
-  const onChangeCategory = (id: number): void => {
-    dispatch(setCategoryId(id));
-  };
 
   const pizzas = items.map((obj: any) => <PizzaBlock key={obj.id} {...obj} />);
   const skeletons = [...new Array(8)].map((_, index) => <Skeleton key={index} />);

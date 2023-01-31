@@ -1,5 +1,7 @@
 Интернет-магазин по заказу пиццы - **React Pizza v2 (REMASTERED)**
 
+Backend используется на Node.js и также есть некоторые отличия от исходного кода.
+
 - [Плейлист с полным курсом на YouTube](https://www.youtube.com/playlist?list=PL0FGkDGJQjJG9eI85xM1_iLIf6BcEdaNl)
 
 **Stack:**

@@ -50,21 +50,6 @@ const filterSlice = createSlice({
     setCurrentPage(state, action: PayloadAction<number>) {
       state.currentPage = action.payload;
     },
-    // setFilters(state, action: PayloadAction<IFilterSliceState>) {
-    //   if (Object.keys(action.payload).length) {
-    //     state.currentPage = Number(action.payload.currentPage);
-    //     state.categoryId = Number(action.payload.categoryId);
-    //     state.sorts = action.payload.sorts;
-    //   } else {
-    //     state.currentPage = 1;
-    //     state.categoryId = 0;
-    //     state.sorts = {
-    //       title: 'популярности',
-    //       type: SortTypeEnum.RATING_DESC,
-    //       order: 'desc',
-    //     };
-    //   }
-    // },
   },
 });
 

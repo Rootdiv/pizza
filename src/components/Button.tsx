@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import clsx from 'clsx';
 
 type Props = {
   onClick: () => void;
   className: string;
   outline: boolean;
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
-export const Button = ({ onClick, className, outline, children }: Partial<Props>) => (
+export const Button: React.FC<Partial<Props>> = ({ onClick, className, outline, children }) => (
   <button
     onClick={onClick}
     className={clsx('button', className, {

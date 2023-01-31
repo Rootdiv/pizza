@@ -32,7 +32,7 @@ type Pizzas = {
   pages: number;
 };
 
-export enum Status {
+enum Status {
   LOADING = 'loading',
   SUCCESS = 'completed',
   ERROR = 'error',
