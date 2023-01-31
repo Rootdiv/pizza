@@ -15,7 +15,7 @@ const sortList: SortItem[] = [
   { title: 'алфавиту (ASC) ↑', type: '-title', order: 'asc' },
 ];
 
-export const Sort = () => {
+export const Sort: React.FC = () => {
   const dispatch = useDispatch();
 
   const sort = useSelector(selectSorts);
@@ -33,9 +33,8 @@ export const Sort = () => {
   };
 
   useEffect(() => {
-    const handleOutsideClick = (event: any) => {
-      const path = event.path || (event.composedPath && event.composedPath());
-      if (sortRef.current && !path.includes(sortRef.current)) {
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (sortRef.current && !event.composedPath().includes(sortRef.current)) {
         setOpen(false);
       }
     };
