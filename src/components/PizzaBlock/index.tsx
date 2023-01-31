@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import clsx from 'clsx';
 
 import { Button } from 'components/Button';
-import { addItem, selectCartItemById } from 'redux/slices/cartSlice';
+import { addItem, CartItemType, selectCartItemById } from 'redux/slices/cartSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 const typeNames = ['тонкое', 'традиционное'];
 const availableSizes = [26, 30, 40];
 
 type PizzaBlockProps = {
-  id: string;
+  id: number;
   title: string;
   price: number;
   imageUrl: string;
@@ -35,13 +35,14 @@ export const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, imageUrl, pri
   };
 
   const onAddPizza = () => {
-    const obj = {
+    const obj: CartItemType = {
       id,
       title,
       imageUrl,
       price,
       size: activeSize,
       type: typeNames[activeType],
+      count: 0,
     };
     dispatch(addItem(obj));
   };

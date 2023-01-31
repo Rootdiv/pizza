@@ -2,17 +2,17 @@ import React, { useState, useEffect, useRef } from 'react';
 
 import arrowTopSvg from 'assets/img/arrow-top.svg';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectSorts, setSorts } from 'redux/slices/filterSlice';
+import { selectSorts, setSorts, SortTypeEnum } from 'redux/slices/filterSlice';
 
-type SortItem = { title: string; type: string; order: string };
+type SortItem = { title: string; type: SortTypeEnum; order: string };
 
 const sortList: SortItem[] = [
-  { title: 'популярности (DESC) ↓', type: 'rating', order: 'desc' },
-  { title: 'популярности (ASC) ↑', type: '-rating', order: 'asc' },
-  { title: 'цене (DESC) ↓', type: 'price', order: 'desc' },
-  { title: 'цене (ASC) ↑', type: '-price', order: 'asc' },
-  { title: 'алфавиту (DESC) ↓', type: 'title', order: 'desc' },
-  { title: 'алфавиту (ASC) ↑', type: '-title', order: 'asc' },
+  { title: 'популярности (DESC)', type: SortTypeEnum.RATING_DESC, order: 'desc' },
+  { title: 'популярности (ASC)', type: SortTypeEnum.RATING_ASC, order: 'asc' },
+  { title: 'цене (DESC)', type: SortTypeEnum.PRICE_DESC, order: 'desc' },
+  { title: 'цене (ASC)', type: SortTypeEnum.PRICE_ASC, order: 'asc' },
+  { title: 'алфавиту (DESC)', type: SortTypeEnum.TITLE_DESC, order: 'desc' },
+  { title: 'алфавиту (ASC)', type: SortTypeEnum.TITLE_ASC, order: 'asc' },
 ];
 
 export const Sort: React.FC = () => {
