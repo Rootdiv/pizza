@@ -17,6 +17,7 @@ Backend используется на Node.js и также есть некот�
 - Lodash.Debounce
 - Redux Persist (сохранение корзины в localStorage)
 - clsx
+- Code Splitting
 
 <details>
   <summary>Описание первой версии интернет-магазина React Pizza</summary>
