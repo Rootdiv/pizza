@@ -6,12 +6,17 @@ Backend используется на Node.js и также есть некот�
 
 **Stack:**
 
-- ReactJS + хуки
+- ReactJS 18
+- TypeScript
+- Redux Toolkit (хранение данных / пицц)
+- React Router v6 (навигация)
+- Axios (отправка запроса на бэкенд)
+- React Hooks (хуки)
+- React Content Loader (скелетон)
+- React Pagination (пагинация)
+- Lodash.Debounce
+- Redux Persist (сохранение корзины в localStorage)
 - clsx
-- React Router
-- Axios
-- Redux
-- Redux thunk
 
 <details>
   <summary>Описание первой версии интернет-магазина React Pizza</summary>
