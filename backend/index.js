@@ -68,7 +68,7 @@ const sortByAndSearch = (goods, params) => {
   return data;
 };
 
-const pagination = (goods, page = 1, count = 4) => {
+const pagination = (goods, count = 4, page = 1) => {
   const end = count * page;
   const start = page === 1 ? 0 : end - count;
 
@@ -84,7 +84,10 @@ const pagination = (goods, page = 1, count = 4) => {
 const getPizzas = params => {
   const data = JSON.parse(readFileSync(DB_FILE) || '[]');
   const sortedData = sortByAndSearch(data.pizzas, params);
-  return pagination(sortedData, +params.page, params.limit);
+  if (params.limit) {
+    return pagination(sortedData, params.limit, +params.page);
+  }
+  return sortedData;
 };
 
 // создаём HTTP сервер, переданная функция будет реагировать на все запросы к нему
