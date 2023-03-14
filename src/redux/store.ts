@@ -9,7 +9,7 @@ import cart from './cart/slice';
 import pizza from './pizza/slice';
 
 const persistConfig = {
-  key: 'cart',
+  key: 'pizza-cart-react',
   storage,
 };
 
