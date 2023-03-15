@@ -2,12 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { CartEmpty, CartItem, Button } from 'components';
-import { ReactComponent as CartSvg } from 'assets/img/cart.svg';
-import { ReactComponent as TrashSvg } from 'assets/img/trash.svg';
+import { CartEmpty, CartItem, Button } from '@/components';
+import { ReactComponent as CartSvg } from '@/assets/img/cart.svg';
+import { ReactComponent as TrashSvg } from '@/assets/img/trash.svg';
 
-import { selectCart } from 'redux/cart/selectors';
-import { clearItems } from 'redux/cart/slice';
+import { selectCart } from '@/redux/cart/selectors';
+import { clearItems } from '@/redux/cart/slice';
 
 const Cart: React.FC = () => {
   const dispatch = useDispatch();

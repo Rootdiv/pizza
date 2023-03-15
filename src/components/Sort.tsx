@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-import arrowTopSvg from 'assets/img/arrow-top.svg';
+import arrowTopSvg from '@/assets/img/arrow-top.svg';
 import { useDispatch } from 'react-redux';
-import { setSorts } from 'redux/filter/slice';
-import { SortItem, SortTypeEnum } from 'redux/filter/types';
+import { setSorts } from '@/redux/filter/slice';
+import { SortItem, SortTypeEnum } from '@/redux/filter/types';
 
 type SortProps = {
   sort: SortItem;

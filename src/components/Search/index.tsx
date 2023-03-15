@@ -1,9 +1,9 @@
 import React, { useState, useRef, useMemo, ChangeEvent } from 'react';
 import { useDispatch } from 'react-redux';
-import { setSearchValue } from 'redux/filter/slice';
+import { setSearchValue } from '@/redux/filter/slice';
 import debounce from 'lodash.debounce';
 
-import { ReactComponent as ClearIcon } from 'assets/img/clear-icon.svg';
+import { ReactComponent as ClearIcon } from '@/assets/img/clear-icon.svg';
 
 import styles from './Search.module.scss';
 

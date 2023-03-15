@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { calcTotalCount } from 'utils/calcTotalCount';
-import { calcTotalPrice } from 'utils/calcTotalPrice';
+import { calcTotalCount } from '@/utils/calcTotalCount';
+import { calcTotalPrice } from '@/utils/calcTotalPrice';
 import { CartItemType, ICartSliceState } from './types';
 
 const initialState: ICartSliceState = {
