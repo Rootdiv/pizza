@@ -26,13 +26,11 @@ export const Header: React.FC = () => {
         </Link>
         {location.pathname !== '/cart' && <Search />}
         <div className="header__cart">
-          <Link to="/cart">
-            <Button className="button--cart">
-              <span>{totalPrice} &#8381;</span>
-              <div className="button__delimiter" />
-              <img src={cartSvg} alt="Корзина" />
-              <span>{totalCount}</span>
-            </Button>
+          <Link to="/cart" className="button button--cart">
+            <span>{totalPrice} &#8381;</span>
+            <div className="button__delimiter" />
+            <img src={cartSvg} alt="Корзина" />
+            <span>{totalCount}</span>
           </Link>
         </div>
       </div>

@@ -78,7 +78,7 @@ export const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, imageUrl, pri
         </div>
         <div className="pizza-block__bottom">
           <div className="pizza-block__price">от {price} &#8381;</div>
-          <Button onClick={onAddPizza} className="button--add" outline>
+          <Button onClick={onAddPizza} className="button--add">
             <svg width="10" height="10" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
               <path d="M5.92 3.84v4.8a.96.96 0 0 1-1.92 0V.96a.96.96 0 0 1 1.92 0v2.88Z" />
               <path d="M5.76 5.92H.96A.96.96 0 0 1 .96 4h7.68a.96.96 0 0 1 0 1.92H5.76Z" />
